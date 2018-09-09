@@ -37,7 +37,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="15dp"
-        android:src="@drawable/ic_settings"
+        android:src="@mipmap/icon_setting"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 </RelativeLayout>

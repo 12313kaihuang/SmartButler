@@ -9,4 +9,6 @@
     <string name="settings">设置</string>
     <string name="str_test">test</string>
     <string name="str_guide_page">引导页</string>
+    <string name="str_load_fail">加载失败</string>
+    <string name="str_to_main">进入主页</string>
 </resources>
