@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">SmartButler</string>
+    <string name="app_name">智能管家</string>
     <string name="butler_service">服务管家</string>
     <string name="service_butler">管家服务</string>
     <string name="wechat_letter">微信精选</string>
