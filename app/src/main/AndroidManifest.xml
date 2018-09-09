@@ -10,15 +10,27 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.android.smartbutler.MainActivity">
+
+        <!--闪屏-->
+        <activity android:name=".ui.SplashActivity"
+            android:theme="@style/NoActionBarFullscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.android.smartbutler.ui.SettingActivity"
-            android:label="@string/settings"/>
+
+        <!--设置-->
+        <activity
+            android:name="com.android.smartbutler.ui.SettingActivity"
+            android:label="@string/settings" />
+
+        <!--主页-->
+        <activity android:name="com.android.smartbutler.MainActivity" />
+
+        <!--引导页-->
+        <activity android:name=".ui.GuideActivity" />
     </application>
 
 </manifest>
