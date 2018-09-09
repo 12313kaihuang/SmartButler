@@ -16,6 +16,7 @@ import com.android.smartbutler.fragment.GirlFragment;
 import com.android.smartbutler.fragment.UserFragment;
 import com.android.smartbutler.fragment.WechatFragment;
 import com.android.smartbutler.ui.SettingActivity;
+import com.tencent.bugly.crashreport.CrashReport;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         initData();
         initView();
+
     }
 
     //初始化数据
