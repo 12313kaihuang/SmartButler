@@ -1,8 +1,7 @@
-package com.adnroid.smartbutler.ui;
+package com.android.smartbutler.ui;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;

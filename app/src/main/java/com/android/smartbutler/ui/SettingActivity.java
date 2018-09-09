@@ -1,10 +1,9 @@
-package com.adnroid.smartbutler.ui;
+package com.android.smartbutler.ui;
 
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 
-import com.adnroid.smartbutler.R;
+import com.android.smartbutler.R;
 
 /**
  * 项目名：SmartButler

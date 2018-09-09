@@ -1,4 +1,4 @@
-package com.adnroid.smartbutler.util;
+package com.android.smartbutler.util;
 
 /**
  * 项目名：SmartButler

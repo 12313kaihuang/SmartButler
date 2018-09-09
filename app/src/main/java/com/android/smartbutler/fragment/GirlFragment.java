@@ -1,4 +1,4 @@
-package com.adnroid.smartbutler.fragment;
+package com.android.smartbutler.fragment;
 
 
 import android.os.Bundle;
@@ -9,15 +9,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.adnroid.smartbutler.R;
+import com.android.smartbutler.R;
 
 
-public class UserFragment extends Fragment {
+public class GirlFragment extends Fragment {
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_user, null);
+        View view = inflater.inflate(R.layout.fragment_girl, null);
         return view;
     }
 }

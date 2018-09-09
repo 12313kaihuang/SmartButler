@@ -1,4 +1,4 @@
-package com.adnroid.smartbutler;
+package com.android.smartbutler;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

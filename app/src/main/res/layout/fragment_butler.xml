@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context="com.adnroid.smartbutler.fragment.ButlerFragment">
+    tools:context="com.android.smartbutler.fragment.ButlerFragment">
 
 
     <TextView

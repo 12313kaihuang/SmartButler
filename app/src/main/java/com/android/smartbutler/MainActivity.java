@@ -1,4 +1,4 @@
-package com.adnroid.smartbutler;
+package com.android.smartbutler;
 
 import android.content.Intent;
 import android.support.annotation.Nullable;
@@ -9,14 +9,13 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
-import com.adnroid.smartbutler.fragment.ButlerFragment;
-import com.adnroid.smartbutler.fragment.GirlFragment;
-import com.adnroid.smartbutler.fragment.UserFragment;
-import com.adnroid.smartbutler.fragment.WechatFragment;
-import com.adnroid.smartbutler.ui.SettingActivity;
+import com.android.smartbutler.fragment.ButlerFragment;
+import com.android.smartbutler.fragment.GirlFragment;
+import com.android.smartbutler.fragment.UserFragment;
+import com.android.smartbutler.fragment.WechatFragment;
+import com.android.smartbutler.ui.SettingActivity;
 
 import java.util.ArrayList;
 import java.util.List;

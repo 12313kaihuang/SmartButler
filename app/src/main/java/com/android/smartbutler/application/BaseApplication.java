@@ -1,4 +1,4 @@
-package com.adnroid.smartbutler.application;
+package com.android.smartbutler.application;
 
 import android.app.Application;
 
