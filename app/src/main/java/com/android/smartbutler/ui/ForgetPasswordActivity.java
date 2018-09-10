@@ -96,8 +96,6 @@ public class ForgetPasswordActivity extends BaseActivity implements View.OnClick
                                 UtilTools.toast(ForgetPasswordActivity.this, "重置密码成功");
                                 finish();
                             } else {
-                                LogUtil.d(MyUser.getCurrentUser().getUsername());
-                                LogUtil.d(e.toString());
                                 UtilTools.toast(ForgetPasswordActivity.this, "重置密码失败！");
                             }
                         }

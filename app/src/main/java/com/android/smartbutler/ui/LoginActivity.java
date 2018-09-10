@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -15,8 +16,8 @@ import android.widget.Toast;
 import com.android.smartbutler.MainActivity;
 import com.android.smartbutler.R;
 import com.android.smartbutler.entity.MyUser;
-import com.android.smartbutler.util.LogUtil;
 import com.android.smartbutler.util.SharedPreferencesUtil;
+import com.android.smartbutler.view.CustomDialog;
 
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
@@ -40,6 +41,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private CheckBox keep_password;
     private TextView tv_forget;
 
+    private CustomDialog dialog;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +60,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         btnLogin.setOnClickListener(this);
         keep_password = findViewById(R.id.keep_password);
         tv_forget = findViewById(R.id.tv_forget);
+        dialog = new CustomDialog(this, 300,300, R.layout.dialog_loding, R.style.Theme_dialog, Gravity.CENTER,
+                R.style.pop_anim_style);
+        //屏幕外点击无效
+        dialog.setCancelable(false);
 
         tv_forget.setOnClickListener(this);
 
@@ -84,6 +91,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 String name = et_name.getText().toString().trim();
                 String password = et_password.getText().toString();
                 if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(password)) {
+                    dialog.show();
+                    //登录
                     final MyUser user = new MyUser();
                     user.setUsername(name);
                     user.setPassword(password);
@@ -92,6 +101,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         @SuppressWarnings("ConstantConditions")
                         @Override
                         public void done(MyUser myUser, BmobException e) {
+                            dialog.dismiss();
                             //判断结果
                             if (e == null) {
                                 startActivity(new Intent(LoginActivity.this, MainActivity.class));

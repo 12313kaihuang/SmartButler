@@ -32,4 +32,5 @@
     <string name="old_pass">旧密码</string>
     <string name="new_pass">新密码</string>
     <string name="repeat_pass">重复新密码</string>
+    <string name="logging">正在登录...</string>
 </resources>
