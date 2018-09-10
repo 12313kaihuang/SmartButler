@@ -63,7 +63,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnRegistered:
-                //获取到输入框的只
+                //获取到输入框的值
                 String name = et_user.getText().toString().trim();
                 String age = et_age.getText().toString().trim();
                 String desc = et_desc.getText().toString().trim();
@@ -103,7 +103,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                         user.setAge(Integer.parseInt(age));
                         user.setDesc(desc);
                         user.setSex(isMale);
-                        LogUtil.d("ifMale: "+isMale);
+                        LogUtil.d("ifMale: " + isMale);
                         LogUtil.d("准备注册");
                         user.signUp(new SaveListener<MyUser>() {
                             @Override

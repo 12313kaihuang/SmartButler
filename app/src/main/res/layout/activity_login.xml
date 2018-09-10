@@ -13,11 +13,14 @@
         android:contentDescription="@string/str_load_fail" />
 
     <EditText
+        android:id="@+id/login_username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/str_username" />
 
     <EditText
+        android:id="@+id/login_password"
+        android:inputType="textPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/str_password" />
@@ -29,6 +32,7 @@
         android:orientation="vertical">
 
         <CheckBox
+            android:id="@+id/keep_password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
