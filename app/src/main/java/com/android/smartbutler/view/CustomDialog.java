@@ -9,7 +9,6 @@ import android.view.WindowManager;
 
 import com.android.smartbutler.R;
 
-import java.security.PublicKey;
 
 /**
  * 项目名：SmartButler
@@ -20,6 +19,7 @@ import java.security.PublicKey;
  * 描述：  自定义Dialog
  */
 
+@SuppressWarnings("unused")
 public class CustomDialog extends Dialog {
 
     //定义模板
