@@ -42,6 +42,9 @@ dependencies {
     implementation 'com.tencent.bugly:crashreport:2.6.6.1'
     //其中latest.release指代最新Bugly NDK版本号，也可以指定明确的版本号，例如3.0
     implementation 'com.tencent.bugly:nativecrashreport:3.3.1'
+    //Bmob环境
     implementation 'cn.bmob.android:http-legacy:1.0'
     implementation 'cn.bmob.android:bmob-sdk:3.6.5'
+    //circleImageView
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
 }
