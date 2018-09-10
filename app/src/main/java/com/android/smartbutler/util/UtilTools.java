@@ -3,6 +3,7 @@ package com.android.smartbutler.util;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * 项目名：SmartButler
@@ -22,4 +23,10 @@ public class UtilTools {
         Typeface fontType = Typeface.createFromAsset(context.getAssets(), "fonts/FONT.TTF");
         textView.setTypeface(fontType);
     }
+
+    //Toast
+    public static void toast(Context context, String text) {
+        Toast.makeText(context,text,Toast.LENGTH_SHORT).show();
+    }
+
 }

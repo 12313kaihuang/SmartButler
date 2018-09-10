@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.smartbutler.MainActivity;
@@ -37,6 +38,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private EditText et_password;
     private Button btnLogin;
     private CheckBox keep_password;
+    private TextView tv_forget;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -54,6 +56,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         btnLogin = findViewById(R.id.btn_login);
         btnLogin.setOnClickListener(this);
         keep_password = findViewById(R.id.keep_password);
+        tv_forget = findViewById(R.id.tv_forget);
+
+        tv_forget.setOnClickListener(this);
 
         //设置选中的状态
         boolean iskeeppass = SharedPreferencesUtil.getBoolean(this, "keeppass", false);
@@ -70,6 +75,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         switch (v.getId()) {
             case R.id.btn_registered:
                 startActivity(new Intent(this, RegisterActivity.class));
+                break;
+            case R.id.tv_forget:
+                startActivity(new Intent(this,ForgetPasswordActivity.class));
                 break;
             case R.id.btn_login:
                 //1.获取输入框的值
