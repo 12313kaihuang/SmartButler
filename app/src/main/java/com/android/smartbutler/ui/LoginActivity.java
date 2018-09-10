@@ -104,6 +104,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             //判断结果
                             if (e == null) {
                                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                finish();
                             } else {
                                 Toast.makeText(LoginActivity.this, "登录失败"
                                         + e.toString(), Toast.LENGTH_SHORT).show();
