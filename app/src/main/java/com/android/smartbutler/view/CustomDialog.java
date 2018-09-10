@@ -9,6 +9,8 @@ import android.view.WindowManager;
 
 import com.android.smartbutler.R;
 
+import java.security.PublicKey;
+
 /**
  * 项目名：SmartButler
  * 包名：  com.android.smartbutler.view
@@ -45,4 +47,10 @@ public class CustomDialog extends Dialog {
     public CustomDialog(Context context, int width, int height, int layout, int style, int gravity){
         this(context, width, height, layout, style, gravity,R.style.pop_anim_style);
     }
+
+    public static CustomDialog getDefaultDialog(Context context) {
+        return new CustomDialog(context, 300,300, R.layout.dialog_loding, R.style.Theme_dialog, Gravity.CENTER,
+                R.style.pop_anim_style);
+    }
+
 }

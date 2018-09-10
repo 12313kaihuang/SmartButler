@@ -60,8 +60,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         btnLogin.setOnClickListener(this);
         keep_password = findViewById(R.id.keep_password);
         tv_forget = findViewById(R.id.tv_forget);
-        dialog = new CustomDialog(this, 300,300, R.layout.dialog_loding, R.style.Theme_dialog, Gravity.CENTER,
-                R.style.pop_anim_style);
+        dialog =  CustomDialog.getDefaultDialog(this);
         //屏幕外点击无效
         dialog.setCancelable(false);
 
