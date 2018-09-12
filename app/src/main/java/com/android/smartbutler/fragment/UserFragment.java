@@ -3,38 +3,30 @@ package com.android.smartbutler.fragment;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
-import android.util.Base64;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.smartbutler.R;
 import com.android.smartbutler.entity.MyUser;
+import com.android.smartbutler.ui.CourierActivity;
 import com.android.smartbutler.ui.LoginActivity;
 import com.android.smartbutler.util.LogUtil;
-import com.android.smartbutler.util.SharedPreferencesUtil;
 import com.android.smartbutler.util.UtilTools;
 import com.android.smartbutler.view.CustomDialog;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 
 import cn.bmob.v3.BmobUser;
@@ -64,6 +56,8 @@ public class UserFragment extends Fragment implements View.OnClickListener {
     private Button btn_picture;
     private Button btn_cancel;
 
+    private TextView tv_courier;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -81,6 +75,9 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         et_desc = view.findViewById(R.id.et_desc);
         btn_update_ok = view.findViewById(R.id.btn_update_ok);
         profile_image = view.findViewById(R.id.profile_image);
+        tv_courier = view.findViewById(R.id.tv_courier);
+
+        tv_courier.setOnClickListener(this);
 
 
         profile_image.setOnClickListener(this);
@@ -183,6 +180,9 @@ public class UserFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.btn_picture:
                 toPicture();
+                break;
+            case R.id.tv_courier:
+                startActivity(new Intent(getActivity(),CourierActivity.class));
                 break;
         }
     }

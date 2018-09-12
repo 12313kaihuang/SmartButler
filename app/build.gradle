@@ -44,7 +44,15 @@ dependencies {
     implementation 'com.tencent.bugly:nativecrashreport:3.3.1'
     //Bmob环境
     implementation 'cn.bmob.android:http-legacy:1.0'
-    implementation 'cn.bmob.android:bmob-sdk:3.6.5'
+    implementation ('cn.bmob.android:bmob-sdk:3.6.5'){
+        //过滤冲突
+        exclude group:'io.reactivex'
+    }
+
     //circleImageView
     implementation 'de.hdodenhof:circleimageview:2.2.0'
+    //RxVolley
+    implementation ('com.kymjs.rxvolley:rxvolley:1.1.4'){
+        exclude group:'io.reactivex'
+    }
 }
