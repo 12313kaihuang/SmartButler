@@ -2,11 +2,20 @@ package com.android.smartbutler.fragment;
 
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.Parcelable;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import android.util.Base64;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,11 +28,19 @@ import android.widget.Toast;
 import com.android.smartbutler.R;
 import com.android.smartbutler.entity.MyUser;
 import com.android.smartbutler.ui.LoginActivity;
+import com.android.smartbutler.util.LogUtil;
+import com.android.smartbutler.util.SharedPreferencesUtil;
 import com.android.smartbutler.util.UtilTools;
+import com.android.smartbutler.view.CustomDialog;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.UpdateListener;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class UserFragment extends Fragment implements View.OnClickListener {
@@ -38,6 +55,14 @@ public class UserFragment extends Fragment implements View.OnClickListener {
     private EditText et_desc;
 
     private Button btn_update_ok;
+
+    //圆形头像
+    private CircleImageView profile_image;
+
+    private CustomDialog dialog;
+    private Button btn_camera;
+    private Button btn_picture;
+    private Button btn_cancel;
 
     @Nullable
     @Override
@@ -55,8 +80,26 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         et_age = view.findViewById(R.id.et_age);
         et_desc = view.findViewById(R.id.et_desc);
         btn_update_ok = view.findViewById(R.id.btn_update_ok);
+        profile_image = view.findViewById(R.id.profile_image);
 
+
+        profile_image.setOnClickListener(this);
         btn_update_ok.setOnClickListener(this);
+
+        //获取头像
+        UtilTools.getImageFromShare(getActivity(),profile_image);
+
+        //初始化dialog
+        dialog = new CustomDialog(getActivity(), 1050, 700,
+                R.layout.dialog_photo, R.style.pop_anim_style, Gravity.BOTTOM, 0);
+        //提示框以外点击无效
+        dialog.setCancelable(false);
+        btn_camera = dialog.findViewById(R.id.btn_camera);
+        btn_camera.setOnClickListener(this);
+        btn_picture = dialog.findViewById(R.id.btn_picture);
+        btn_picture.setOnClickListener(this);
+        btn_cancel = dialog.findViewById(R.id.btn_cancel);
+        btn_cancel.setOnClickListener(this);
 
         //默认不可点击/不可输入
         setEnabled(false);
@@ -117,9 +160,9 @@ public class UserFragment extends Fragment implements View.OnClickListener {
                                     if (e == null) {
                                         setEnabled(false);
                                         btn_update_ok.setVisibility(View.GONE);
-                                        UtilTools.toast(getActivity(),"修改成功");
-                                    }else {
-                                        UtilTools.toast(getActivity(),"修改失败");
+                                        UtilTools.toast(getActivity(), "修改成功");
+                                    } else {
+                                        UtilTools.toast(getActivity(), "修改失败");
                                     }
                                 }
                             }
@@ -128,6 +171,102 @@ public class UserFragment extends Fragment implements View.OnClickListener {
                     UtilTools.toast(getActivity(), "输入框不能为空");
                 }
                 break;
+
+            case R.id.profile_image:
+                dialog.show();
+                break;
+            case R.id.btn_cancel:
+                dialog.dismiss();
+                break;
+            case R.id.btn_camera:
+                toCamera();
+                break;
+            case R.id.btn_picture:
+                toPicture();
+                break;
+        }
+    }
+
+    public static final String PHOTO_IMAGE_FILE_NAME = "fileImg.jpg";
+    public static final int CAMERA_REQUEST_CODE = 100;
+    public static final int IMAGE_REQUEST_CODE = 101;
+    public static final int RESULT_REQUEST_CODE = 102;
+    private static File tempFile = null;
+
+    //跳转相机
+    private void toCamera() {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        //判断内存卡是否可用，可用的话就进行存储
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(
+                new File(Environment.getExternalStorageDirectory(), PHOTO_IMAGE_FILE_NAME)));
+        startActivityForResult(intent, CAMERA_REQUEST_CODE);
+        dialog.dismiss();
+    }
+
+    //跳转相册
+    private void toPicture() {
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*");
+        startActivityForResult(intent, IMAGE_REQUEST_CODE);
+        dialog.dismiss();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode != getActivity().RESULT_CANCELED) {
+            switch (requestCode) {
+                //相册数据
+                case IMAGE_REQUEST_CODE:
+                    startPhotoZoom(data.getData());
+                    break;
+                //相机数据
+                case CAMERA_REQUEST_CODE:
+                    tempFile = new File(Environment.getExternalStorageDirectory(), PHOTO_IMAGE_FILE_NAME);
+                    startPhotoZoom(Uri.fromFile(tempFile));
+                    break;
+                case RESULT_REQUEST_CODE:
+                    //有可能点击舍弃
+                    if (data != null) {
+                        //拿到图片设置
+                        setImageToView(data);
+                        //既然已经设置了图片，原先的就应该删除
+                        if (tempFile != null) {
+                            //noinspection ResultOfMethodCallIgnored
+                            tempFile.delete();
+                        }
+                    }
+                    break;
+            }
+        }
+    }
+
+    //裁剪
+    private void startPhotoZoom(Uri uri) {
+        if (uri == null) {
+            LogUtil.e("uri==null");
+            return;
+        }
+        Intent intent = new Intent("com.android.camera.action.CROP");
+        intent.setDataAndType(uri, "image/*");
+        //设置裁剪
+        intent.putExtra("crop", "true");
+        //裁剪宽高比例
+        intent.putExtra("aspectX", 1);
+        intent.putExtra("aspectY", 1);
+        //裁剪图片的质量
+        intent.putExtra("outputX", 320);
+        intent.putExtra("outputY", 320);
+        //发送数据
+        intent.putExtra("return-data", true);
+        startActivityForResult(intent, RESULT_REQUEST_CODE);
+    }
+
+    //设置图片
+    private void setImageToView(Intent data) {
+        Bundle bundle = data.getExtras();
+        if (bundle != null) {
+            Bitmap bitmap = bundle.getParcelable("data");
+            profile_image.setImageBitmap(bitmap);
         }
     }
 
@@ -136,5 +275,12 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         et_sex.setEnabled(enabled);
         et_age.setEnabled(enabled);
         et_desc.setEnabled(enabled);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        //保存
+        UtilTools.putImageToShare(getActivity(),profile_image);
     }
 }

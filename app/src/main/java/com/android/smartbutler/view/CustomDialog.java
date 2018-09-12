@@ -48,7 +48,7 @@ public class CustomDialog extends Dialog {
         this(context, width, height, layout, style, gravity,R.style.pop_anim_style);
     }
 
-    public static CustomDialog getDefaultDialog(Context context) {
+    public static CustomDialog getLoadingDialog(Context context) {
         return new CustomDialog(context, 300,300, R.layout.dialog_loding, R.style.Theme_dialog, Gravity.CENTER,
                 R.style.pop_anim_style);
     }

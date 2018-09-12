@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -60,7 +59,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         btnLogin.setOnClickListener(this);
         keep_password = findViewById(R.id.keep_password);
         tv_forget = findViewById(R.id.tv_forget);
-        dialog =  CustomDialog.getDefaultDialog(this);
+        dialog =  CustomDialog.getLoadingDialog(this);
         //屏幕外点击无效
         dialog.setCancelable(false);
 
