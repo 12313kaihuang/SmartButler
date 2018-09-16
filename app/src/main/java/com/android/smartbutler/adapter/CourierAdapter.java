@@ -1,4 +1,4 @@
-package com.android.smartbutler.adaptor;
+package com.android.smartbutler.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;

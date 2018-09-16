@@ -9,7 +9,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import com.android.smartbutler.R;
-import com.android.smartbutler.adaptor.CourierAdapter;
+import com.android.smartbutler.adapter.CourierAdapter;
 import com.android.smartbutler.entity.CourierData;
 import com.android.smartbutler.util.StaticClass;
 import com.android.smartbutler.util.UtilTools;
