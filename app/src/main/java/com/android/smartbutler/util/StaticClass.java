@@ -29,4 +29,7 @@ public class StaticClass {
     //归属地查询Key
     public static final String Phone_KEY = "178da00506c72623d79bcbd27779e0b1";
 
+    //微信精选Key
+    public static final String WECHAT_KEY = "78f723dccf85aea324a3cf0daac97f35";
+
 }
