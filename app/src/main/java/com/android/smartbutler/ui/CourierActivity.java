@@ -21,6 +21,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -86,7 +87,6 @@ public class CourierActivity extends BaseActivity implements View.OnClickListene
                     RxVolley.get(url, new HttpCallback() {
                         @Override
                         public void onSuccess(String t) {
-                            UtilTools.toast(CourierActivity.this, t);
                             //解析Json
                             parsingJson(t);
                         }
@@ -114,6 +114,9 @@ public class CourierActivity extends BaseActivity implements View.OnClickListene
                 list.add(data);
 
             }
+
+            //倒序
+            Collections.reverse(list);
             CourierAdapter adapter = new CourierAdapter(this, list);
             listView.setAdapter(adapter);
         } catch (JSONException e) {

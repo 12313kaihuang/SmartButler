@@ -26,4 +26,7 @@ public class StaticClass {
     //快递Key
     public static final String COURIER_KEY = "502e6fe43b7fe8c9e5d3609ed6f77e9f";
 
+    //归属地查询Key
+    public static final String Phone_KEY = "178da00506c72623d79bcbd27779e0b1";
+
 }

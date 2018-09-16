@@ -55,7 +55,7 @@ public class CourierAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder viewHolder = null;
+        ViewHolder viewHolder ;
         //第一次加载
         if (convertView == null) {
             viewHolder = new ViewHolder();

@@ -23,6 +23,7 @@ import com.android.smartbutler.R;
 import com.android.smartbutler.entity.MyUser;
 import com.android.smartbutler.ui.CourierActivity;
 import com.android.smartbutler.ui.LoginActivity;
+import com.android.smartbutler.ui.PhoneActivity;
 import com.android.smartbutler.util.LogUtil;
 import com.android.smartbutler.util.UtilTools;
 import com.android.smartbutler.view.CustomDialog;
@@ -56,7 +57,10 @@ public class UserFragment extends Fragment implements View.OnClickListener {
     private Button btn_picture;
     private Button btn_cancel;
 
+    //快递查询
     private TextView tv_courier;
+    //归属地查询
+    private TextView tv_phone;
 
     @Nullable
     @Override
@@ -76,8 +80,10 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         btn_update_ok = view.findViewById(R.id.btn_update_ok);
         profile_image = view.findViewById(R.id.profile_image);
         tv_courier = view.findViewById(R.id.tv_courier);
+        tv_phone = view.findViewById(R.id.tv_phone);
 
         tv_courier.setOnClickListener(this);
+        tv_phone.setOnClickListener(this);
 
 
         profile_image.setOnClickListener(this);
@@ -183,6 +189,9 @@ public class UserFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.tv_courier:
                 startActivity(new Intent(getActivity(),CourierActivity.class));
+                break;
+            case R.id.tv_phone:
+                startActivity(new Intent(getActivity(),PhoneActivity.class));
                 break;
         }
     }
