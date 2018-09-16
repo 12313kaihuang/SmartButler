@@ -55,4 +55,23 @@ dependencies {
     implementation ('com.kymjs.rxvolley:rxvolley:1.1.4'){
         exclude group:'io.reactivex'
     }
+    //Picasso
+    implementation 'com.squareup.picasso:picasso:2.71828'
+    //PhotoView
+    implementation 'com.github.chrisbanes:PhotoView:2.1.4'
+
+    configurations {
+        all*.exclude group: 'com.squareup.okio'
+    }
+
+    configurations.all {
+        resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+            def requested = details.requested
+            if (requested.group == 'com.android.support') {
+                if (!requested.name.startsWith("multidex")) {
+                    details.useVersion '27.1.1'
+                }
+            }
+        }
+    }
 }

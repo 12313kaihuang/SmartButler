@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -85,7 +86,12 @@ public class WechatFragment extends Fragment {
                 WechatData data = new WechatData();
                 data.setTitle(json.getString("title"));
                 data.setSource(json.getString("source"));
-                data.setImgUrl(json.getString("firstImg"));
+
+                if (TextUtils.isEmpty(json.getString("firstImg"))){
+                    data.setImgUrl("http://c.hiphotos.baidu.com/image/pic/item/b58f8c5494eef01f40ef23e9edfe9925bc317d26.jpg");
+                }else {
+                    data.setImgUrl(json.getString("firstImg"));
+                }
                 list.add(data);
 
                 titleList.add(data.getTitle());

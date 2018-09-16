@@ -2,9 +2,11 @@ package com.android.smartbutler.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Point;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -12,6 +14,7 @@ import android.widget.TextView;
 import com.android.smartbutler.R;
 import com.android.smartbutler.entity.WechatData;
 import com.android.smartbutler.util.LogUtil;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -30,11 +33,19 @@ public class WechatAdaptor extends BaseAdapter {
     private LayoutInflater inflater;
     private List<WechatData> dataList;
     private WechatData data;
+    private int width,height;
+    private WindowManager windowManager;
 
     public WechatAdaptor(Context context, List<WechatData> dataList) {
         this.context = context;
         this.dataList = dataList;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        Point point = new Point();
+        windowManager.getDefaultDisplay().getSize(point);
+        width = point.x;
+        height = point.y;
     }
 
     @Override
@@ -69,6 +80,11 @@ public class WechatAdaptor extends BaseAdapter {
         data = dataList.get(position);
         viewHolder.tv_title.setText(data.getTitle());
         viewHolder.tv_source.setText(data.getSource());
+        //加载图片
+        Picasso.get().load(data.getImgUrl())
+                .resize(width/3,200)
+                .centerCrop()
+                .into(viewHolder.iv_img);
         return convertView;
     }
 

@@ -32,4 +32,7 @@ public class StaticClass {
     //微信精选Key
     public static final String WECHAT_KEY = "78f723dccf85aea324a3cf0daac97f35";
 
+    //美女图片接口
+    public static final String GIRL_URL = "https://gank.io/api/data/%E7%A6%8F%E5%88%A9/50/1";
+
 }

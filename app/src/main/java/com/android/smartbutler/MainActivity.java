@@ -16,6 +16,7 @@ import com.android.smartbutler.fragment.GirlFragment;
 import com.android.smartbutler.fragment.UserFragment;
 import com.android.smartbutler.fragment.WechatFragment;
 import com.android.smartbutler.ui.SettingActivity;
+import com.android.smartbutler.util.LogUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        LogUtil.d("Test");
 
         //去掉TabLayout和标题之间的阴影
         //noinspection ConstantConditions
