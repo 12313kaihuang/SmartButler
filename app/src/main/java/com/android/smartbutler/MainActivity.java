@@ -43,6 +43,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //noinspection ConstantConditions
         getSupportActionBar().setElevation(0);
 
+
+
         initData();
         initView();
 
