@@ -38,4 +38,11 @@ public class StaticClass {
     //语音Key
     public static final String VOICE_KEY = "5ade0339";
 
+    //短信Action
+    public static final String SMS_ACTION = "android.provider.Telephony.SMS_RECEIVED";
+
+    //版本更新
+    public static final String CHECK_UPDATE_URL = "http://192.168.1.23:8080/liuguilin/config.json";
+
+
 }
