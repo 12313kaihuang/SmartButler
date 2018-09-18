@@ -3,7 +3,10 @@ package com.android.smartbutler.ui;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -11,6 +14,7 @@ import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.Switch;
 
+import com.android.smartbutler.MainActivity;
 import com.android.smartbutler.R;
 import com.android.smartbutler.service.SmsService;
 import com.android.smartbutler.util.LogUtil;
@@ -78,6 +82,29 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                                 Manifest.permission.RECEIVE_SMS
                         }, 1);
                     }
+
+                    if(Build.VERSION.SDK_INT>=23)
+                    {
+                        if(Settings.canDrawOverlays(this))
+                        {
+                            //有悬浮窗权限开启服务绑定 绑定权限
+                            Intent intent = new Intent(this, SmsService.class);
+                            startService(intent);
+
+                        }else{
+                            //没有悬浮窗权限m,去开启悬浮窗权限
+                            try{
+                                Intent  intent=new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
+                                startActivityForResult(intent, 10);
+                            }catch (Exception e)
+                            {
+                                e.printStackTrace();
+                            }
+
+                        }
+                    }
+
+
 
                     startService(new Intent(this, SmsService.class));
                 } else {
