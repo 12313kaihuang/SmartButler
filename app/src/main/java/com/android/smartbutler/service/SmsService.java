@@ -10,14 +10,12 @@ import android.graphics.PixelFormat;
 import android.net.Uri;
 import android.os.Build;
 import android.os.IBinder;
-import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.telephony.SmsMessage;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.smartbutler.R;
@@ -43,14 +41,8 @@ public class SmsService extends Service implements View.OnClickListener {
     private String smsContent;
     //窗口管理
     private WindowManager wm;
-    //布局参数
-    private WindowManager.LayoutParams layoutParams;
 
     private DispatchLinearLayout view;
-
-    private TextView tv_phone;
-    private TextView tv_content;
-    private Button btn_send_sms;
 
     private HomeWatchReceiver homeWatchReceiver;
 
@@ -155,7 +147,7 @@ public class SmsService extends Service implements View.OnClickListener {
         ///获取系统服务
         wm = (WindowManager) getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
         //获取布局参数
-        layoutParams = new WindowManager.LayoutParams();
+        WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
         //定义宽高
         layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
         layoutParams.height = WindowManager.LayoutParams.MATCH_PARENT;
@@ -164,14 +156,14 @@ public class SmsService extends Service implements View.OnClickListener {
                 | WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH;
         //定义格式
         layoutParams.format = PixelFormat.TRANSLUCENT;
-        //定义类型
         layoutParams.type = WindowManager.LayoutParams.TYPE_PHONE;
         //加载布局
+        //定义类型
         view = (DispatchLinearLayout) View.inflate(getApplicationContext(), R.layout.sms_item, null);
 
-        tv_phone = view.findViewById(R.id.tv_phone);
-        tv_content = view.findViewById(R.id.tv_content);
-        btn_send_sms = view.findViewById(R.id.btn_send_sms);
+        TextView tv_phone = view.findViewById(R.id.tv_phone);
+        TextView tv_content = view.findViewById(R.id.tv_content);
+        Button btn_send_sms = view.findViewById(R.id.btn_send_sms);
         btn_send_sms.setOnClickListener(this);
 
         //设置数据
@@ -201,7 +193,6 @@ public class SmsService extends Service implements View.OnClickListener {
             return false;
         }
     };
-
 
     //监听Home键的广播
     class HomeWatchReceiver extends BroadcastReceiver {

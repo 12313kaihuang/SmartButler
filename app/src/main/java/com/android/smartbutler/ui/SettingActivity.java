@@ -1,7 +1,10 @@
 package com.android.smartbutler.ui;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
@@ -12,13 +15,22 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.Switch;
+import android.widget.TextView;
 
 import com.android.smartbutler.MainActivity;
 import com.android.smartbutler.R;
 import com.android.smartbutler.service.SmsService;
 import com.android.smartbutler.util.LogUtil;
 import com.android.smartbutler.util.SharedPreferencesUtil;
+import com.android.smartbutler.util.StaticClass;
+import com.android.smartbutler.util.UtilTools;
+import com.kymjs.rxvolley.RxVolley;
+import com.kymjs.rxvolley.client.HttpCallback;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * 项目名：SmartButler
@@ -33,8 +45,14 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
     //语音播报
     private Switch sw_speak;
-
+    //短信提醒
     private Switch sw_sms;
+    //检测更新
+    private LinearLayout ll_update;
+    private TextView tv_version;
+
+    private String versionName;
+    private int versionCode;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,6 +63,8 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void initView() {
+
+
         sw_speak = findViewById(R.id.sw_speak);
         sw_speak.setOnClickListener(this);
 
@@ -56,6 +76,18 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
         boolean isSms = SharedPreferencesUtil.getBoolean(this, "isSms", false);
         sw_sms.setChecked(isSms);
+
+
+        ll_update = findViewById(R.id.ll_update);
+        tv_version = findViewById(R.id.tv_version);
+        ll_update.setOnClickListener(this);
+
+        try {
+            getVersionNameCode();
+            tv_version.setText("检测版本：" + versionName);
+        } catch (PackageManager.NameNotFoundException e) {
+            tv_version.setText("检测版本：");
+        }
 
     }
 
@@ -83,21 +115,18 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                         }, 1);
                     }
 
-                    if(Build.VERSION.SDK_INT>=23)
-                    {
-                        if(Settings.canDrawOverlays(this))
-                        {
+                    if (Build.VERSION.SDK_INT >= 23) {
+                        if (Settings.canDrawOverlays(this)) {
                             //有悬浮窗权限开启服务绑定 绑定权限
                             Intent intent = new Intent(this, SmsService.class);
                             startService(intent);
 
-                        }else{
+                        } else {
                             //没有悬浮窗权限m,去开启悬浮窗权限
-                            try{
-                                Intent  intent=new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
+                            try {
+                                Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
                                 startActivityForResult(intent, 10);
-                            }catch (Exception e)
-                            {
+                            } catch (Exception e) {
                                 e.printStackTrace();
                             }
 
@@ -105,13 +134,69 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                     }
 
 
-
                     startService(new Intent(this, SmsService.class));
                 } else {
                     stopService(new Intent(this, SmsService.class));
                 }
                 break;
+            case R.id.ll_update:
+                /**
+                 * 步骤
+                 * 1、请求服务器配置文件 拿到code
+                 * 2、比较
+                 * 3、dialog提示
+                 * 4、跳转到更新界面，并且把url传递过去
+                 */
+                RxVolley.get(StaticClass.CHECK_UPDATE_URL, new HttpCallback() {
+                    @Override
+                    public void onSuccess(String t) {
+                        LogUtil.d(t);
+                        parseJson(t);
+                    }
+                });
+                break;
         }
+    }
+
+    private void parseJson(String t) {
+        try {
+            JSONObject jsonObject = new JSONObject(t);
+            int code = jsonObject.getInt("versionCode");
+            String content = jsonObject.getString("content");
+            if (code > versionCode) {
+                showUpdateDialog(content);
+            }else {
+                UtilTools.toast(this,"当前已是最新版本");
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //弹出升级提示
+    private void showUpdateDialog(String content) {
+        new AlertDialog.Builder(this)
+                .setTitle("有新版本啦！")
+                .setMessage(content)
+                .setPositiveButton("更新", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        startActivity(new Intent(SettingActivity.this,UpdateActivity.class));
+                    }
+                }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //什么都不做,也会执行dismiss方法
+            }
+        }).show();
+    }
+
+    //获取版本号/code
+    private void getVersionNameCode() throws PackageManager.NameNotFoundException {
+        PackageManager packageManager = getPackageManager();
+        PackageInfo packageInfo = packageManager.getPackageInfo(getPackageName(), 0);
+        versionName = packageInfo.versionName;
+        versionCode = packageInfo.versionCode;
     }
 
     @Override

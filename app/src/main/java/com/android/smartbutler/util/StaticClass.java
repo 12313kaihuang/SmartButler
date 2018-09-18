@@ -42,7 +42,7 @@ public class StaticClass {
     public static final String SMS_ACTION = "android.provider.Telephony.SMS_RECEIVED";
 
     //版本更新
-    public static final String CHECK_UPDATE_URL = "http://192.168.1.23:8080/liuguilin/config.json";
+    public static final String CHECK_UPDATE_URL = "http://47.106.131.58:8080/hy/config.json";
 
 
 }
