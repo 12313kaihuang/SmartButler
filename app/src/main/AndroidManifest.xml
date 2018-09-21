@@ -134,6 +134,10 @@
             android:name=".ui.LocationActivity"
             android:label="我的位置" />
 
+        <!--关于软件-->
+        <activity android:name=".ui.AboutActivity"
+            android:label="关于软件"/>
+
         <!--短信服务-->
         <service android:name=".service.SmsService" />
 

@@ -24,15 +24,13 @@ import java.util.List;
  * 文件名：GuideActivity
  * 创建者：HY
  * 创建时间：2018/9/9 16:16
- * 描述：  TODO
+ * 描述：  引导页
  */
 
 public class GuideActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private ViewPager mViewPager;
     //容器
     private List<View> mList = new ArrayList<>();
-    private View view1,view2,view3;
     //小圆点
     private ImageView point1,point2,point3;
     //跳过
@@ -47,11 +45,11 @@ public class GuideActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void initView() {
-        mViewPager = findViewById(R.id.mViewPager);
+        ViewPager mViewPager = findViewById(R.id.mViewPager);
 
-        view1 = View.inflate(this,R.layout.page_item_one,null);
-        view2 = View.inflate(this,R.layout.page_item_two,null);
-        view3 = View.inflate(this,R.layout.page_item_three,null);
+        View view1 = View.inflate(this, R.layout.page_item_one, null);
+        View view2 = View.inflate(this, R.layout.page_item_two, null);
+        View view3 = View.inflate(this, R.layout.page_item_three, null);
 
         imageView = findViewById(R.id.iv_back);
 

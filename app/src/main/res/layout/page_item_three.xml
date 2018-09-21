@@ -13,14 +13,15 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:contentDescription="@string/str_test"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@drawable/guide_strong"/>
 
         <TextView
+            android:layout_marginTop="10dp"
+            android:id="@+id/tv_pager_3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/str_test"
-            android:textSize="30sp" />
+            android:text="強大"
+            android:textSize="50sp"/>
     </LinearLayout>
 
     <Button

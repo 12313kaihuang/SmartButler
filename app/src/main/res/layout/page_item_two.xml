@@ -6,15 +6,16 @@
     android:orientation="vertical">
 
     <ImageView
-        android:src="@mipmap/ic_launcher"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription="@string/str_test" />
+        android:src="@drawable/guide_concise"/>
 
     <TextView
-        android:text="@string/str_test"
-        android:textSize="30sp"
+        android:layout_marginTop="10dp"
+        android:id="@+id/tv_pager_2"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="简洁"
+        android:textSize="50sp"/>
 
 </LinearLayout>

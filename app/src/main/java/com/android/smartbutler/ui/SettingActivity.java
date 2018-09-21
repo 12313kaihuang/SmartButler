@@ -32,6 +32,7 @@ import com.kymjs.rxvolley.client.HttpCallback;
 import com.uuzuche.lib_zxing.activity.CaptureActivity;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
 
+import org.apache.http.conn.BasicEofSensorWatcher;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -66,6 +67,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     //我的位置
     private LinearLayout ll_my_location;
 
+    private LinearLayout ll_about;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -110,6 +112,9 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
         ll_my_location = findViewById(R.id.ll_my_location);
         ll_my_location.setOnClickListener(this);
+
+        ll_about = findViewById(R.id.ll_about);
+        ll_about.setOnClickListener(this);
     }
 
     @Override
@@ -181,10 +186,13 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 startActivityForResult(intent, 5);
                 break;
             case R.id.ll_qr_code:
-                startActivity(new Intent(this,QrCodeActivity.class));
+                startActivity(new Intent(this, QrCodeActivity.class));
                 break;
             case R.id.ll_my_location:
-startActivity(new Intent(this,LocationActivity.class));
+                startActivity(new Intent(this, LocationActivity.class));
+                break;
+            case R.id.ll_about:
+                startActivity(new Intent(this, AboutActivity.class));
                 break;
         }
     }
@@ -255,13 +263,13 @@ startActivity(new Intent(this,LocationActivity.class));
          */
         if (requestCode == 5) {
             //处理扫描结果（在界面上显示）
-            LogUtil.d("data="+data);
+            LogUtil.d("data=" + data);
             if (null != data) {
                 Bundle bundle = data.getExtras();
                 if (bundle == null) {
                     return;
                 }
-                LogUtil.d("结果"+(bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_SUCCESS));
+                LogUtil.d("结果" + (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_SUCCESS));
                 if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_SUCCESS) {
                     String result = bundle.getString(CodeUtils.RESULT_STRING);
                     Toast.makeText(this, "解析结果:" + result, Toast.LENGTH_LONG).show();

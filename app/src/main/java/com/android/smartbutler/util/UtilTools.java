@@ -1,6 +1,8 @@
 package com.android.smartbutler.util;
 
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
@@ -34,11 +36,11 @@ public class UtilTools {
 
     //Toast
     public static void toast(Context context, String text) {
-        Toast.makeText(context,text,Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
     }
 
     //保存图片到SharedPreferences
-    public static void putImageToShare(Context context,ImageView profile_image) {
+    public static void putImageToShare(Context context, ImageView profile_image) {
         //保存头像
         BitmapDrawable drawable = (BitmapDrawable) profile_image.getDrawable();
         Bitmap bitmap = drawable.getBitmap();
@@ -53,7 +55,7 @@ public class UtilTools {
     }
 
     //从SharedPreferences获取图片
-    public static void getImageFromShare(Context context,ImageView profile_image) {
+    public static void getImageFromShare(Context context, ImageView profile_image) {
         //拿到String
         String imgString = SharedPreferencesUtil.getString(context, "image_title", "");
         if (imgString != null) {
@@ -67,4 +69,15 @@ public class UtilTools {
 
     }
 
+
+    //获取版本号
+    public static String getVersion(Context context) {
+        PackageManager packageManager = context.getPackageManager();
+        try {
+            PackageInfo packageInfo = packageManager.getPackageInfo(context.getPackageName(), 0);
+            return packageInfo.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            return "获取失败";
+        }
+    }
 }
