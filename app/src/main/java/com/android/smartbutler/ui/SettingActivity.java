@@ -63,6 +63,8 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     private LinearLayout ll_scan;
     //生成二维码
     private LinearLayout ll_qr_code;
+    //我的位置
+    private LinearLayout ll_my_location;
 
 
     @Override
@@ -105,6 +107,9 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
         ll_qr_code = findViewById(R.id.ll_qr_code);
         ll_qr_code.setOnClickListener(this);
+
+        ll_my_location = findViewById(R.id.ll_my_location);
+        ll_my_location.setOnClickListener(this);
     }
 
     @Override
@@ -177,6 +182,9 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 break;
             case R.id.ll_qr_code:
                 startActivity(new Intent(this,QrCodeActivity.class));
+                break;
+            case R.id.ll_my_location:
+startActivity(new Intent(this,LocationActivity.class));
                 break;
         }
     }

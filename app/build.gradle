@@ -92,4 +92,6 @@ dependencies {
     }
     implementation files('libs/Msc.jar')
     implementation files('libs/Sunflower.jar')
+    //百度地图
+    implementation files('libs/BaiduLBS_Android.jar')
 }
