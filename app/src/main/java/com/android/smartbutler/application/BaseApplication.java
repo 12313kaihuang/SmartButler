@@ -6,6 +6,7 @@ import com.android.smartbutler.util.StaticClass;
 import com.iflytek.cloud.SpeechConstant;
 import com.iflytek.cloud.SpeechUtility;
 import com.tencent.bugly.crashreport.CrashReport;
+import com.uuzuche.lib_zxing.activity.ZXingLibrary;
 
 import cn.bmob.v3.Bmob;
 
@@ -26,5 +27,7 @@ public class BaseApplication extends Application {
         // 初始化科大讯飞TTS
         SpeechUtility.createUtility(getApplicationContext(),
                 SpeechConstant.APPID + "=" + StaticClass.VOICE_KEY);
+        //初始化Zxing
+        ZXingLibrary.initDisplayOpinion(this);
     }
 }

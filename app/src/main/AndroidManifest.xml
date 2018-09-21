@@ -40,6 +40,14 @@
 
     <uses-permission android:name="android.permission.SEND_SMS" />
 
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:name="com.android.smartbutler.application.BaseApplication"
         android:allowBackup="true"
@@ -105,6 +113,10 @@
         <!--下载-->
         <activity android:name=".ui.UpdateActivity"
             android:label="下载更新"/>
+
+        <!--生成二维码-->
+        <activity android:name=".ui.QrCodeActivity"
+            android:label="我的二维码"/>
 
         <!--短信服务-->
         <service android:name=".service.SmsService" />

@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.smartbutler.MainActivity;
 import com.android.smartbutler.R;
@@ -28,6 +29,8 @@ import com.android.smartbutler.util.StaticClass;
 import com.android.smartbutler.util.UtilTools;
 import com.kymjs.rxvolley.RxVolley;
 import com.kymjs.rxvolley.client.HttpCallback;
+import com.uuzuche.lib_zxing.activity.CaptureActivity;
+import com.uuzuche.lib_zxing.activity.CodeUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -53,6 +56,14 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
     private String versionName;
     private int versionCode;
+
+    private String url;
+
+    //扫一扫
+    private LinearLayout ll_scan;
+    //生成二维码
+    private LinearLayout ll_qr_code;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -89,6 +100,11 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
             tv_version.setText("检测版本：");
         }
 
+        ll_scan = findViewById(R.id.ll_scan);
+        ll_scan.setOnClickListener(this);
+
+        ll_qr_code = findViewById(R.id.ll_qr_code);
+        ll_qr_code.setOnClickListener(this);
     }
 
     @Override
@@ -155,6 +171,13 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                     }
                 });
                 break;
+            case R.id.ll_scan:
+                Intent intent = new Intent(this, CaptureActivity.class);
+                startActivityForResult(intent, 5);
+                break;
+            case R.id.ll_qr_code:
+                startActivity(new Intent(this,QrCodeActivity.class));
+                break;
         }
     }
 
@@ -163,10 +186,11 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
             JSONObject jsonObject = new JSONObject(t);
             int code = jsonObject.getInt("versionCode");
             String content = jsonObject.getString("content");
+            url = jsonObject.getString("url");
             if (code > versionCode) {
                 showUpdateDialog(content);
-            }else {
-                UtilTools.toast(this,"当前已是最新版本");
+            } else {
+                UtilTools.toast(this, "当前已是最新版本");
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -181,14 +205,17 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 .setPositiveButton("更新", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        startActivity(new Intent(SettingActivity.this,UpdateActivity.class));
+                        Intent intent = new Intent(SettingActivity.this, UpdateActivity.class);
+                        intent.putExtra("url", url);
+                        startActivity(intent);
                     }
-                }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                //什么都不做,也会执行dismiss方法
-            }
-        }).show();
+                })
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //什么都不做,也会执行dismiss方法
+                    }
+                }).show();
     }
 
     //获取版本号/code
@@ -211,5 +238,30 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 }
                 break;
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        /**
+         * 处理二维码扫描结果
+         */
+        if (requestCode == 5) {
+            //处理扫描结果（在界面上显示）
+            LogUtil.d("data="+data);
+            if (null != data) {
+                Bundle bundle = data.getExtras();
+                if (bundle == null) {
+                    return;
+                }
+                LogUtil.d("结果"+(bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_SUCCESS));
+                if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_SUCCESS) {
+                    String result = bundle.getString(CodeUtils.RESULT_STRING);
+                    Toast.makeText(this, "解析结果:" + result, Toast.LENGTH_LONG).show();
+                } else if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_FAILED) {
+                    Toast.makeText(SettingActivity.this, "解析二维码失败", Toast.LENGTH_LONG).show();
+                }
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }
