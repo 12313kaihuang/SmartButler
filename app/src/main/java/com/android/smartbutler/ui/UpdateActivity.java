@@ -40,13 +40,14 @@ public class UpdateActivity extends BaseActivity {
     private void initView() {
         tv_size = findViewById(R.id.tv_size);
 
-        path = FileUtils.getSDCardPath() + "/" + System.currentTimeMillis() + ".jpg";
+        path = FileUtils.getSDCardPath() + "/" + System.currentTimeMillis() + ".apk";
 
         //下载
         String url = getIntent().getStringExtra("url");
-        LogUtil.d("url:"+url);
+        LogUtil.d(" updateActivity url:"+url);
         if (!TextUtils.isEmpty(url)) {
-            RxVolley.download(path, "http://222.196.189.25:8080/hy/kate.jpg", new ProgressListener() {
+            LogUtil.d("updateActivity  进来了");
+            RxVolley.download(path, url, new ProgressListener() {
                 @Override
                 public void onProgress(long transferredBytes, long totalSize) {
                     LogUtil.d("transferredBytes:" + transferredBytes

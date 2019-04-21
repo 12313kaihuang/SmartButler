@@ -11,13 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.android.smartbutler.R;
 import com.android.smartbutler.adapter.GirlAdaptor;
 import com.android.smartbutler.entity.GirlData;
-import com.android.smartbutler.util.LogUtil;
 import com.android.smartbutler.util.StaticClass;
 import com.android.smartbutler.view.CustomDialog;
 import com.github.chrisbanes.photoview.PhotoView;

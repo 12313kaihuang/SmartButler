@@ -29,6 +29,7 @@ import com.android.smartbutler.util.StaticClass;
 import com.android.smartbutler.util.UtilTools;
 import com.kymjs.rxvolley.RxVolley;
 import com.kymjs.rxvolley.client.HttpCallback;
+import com.kymjs.rxvolley.http.VolleyError;
 import com.uuzuche.lib_zxing.activity.CaptureActivity;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
 
@@ -173,11 +174,17 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                  * 3、dialog提示
                  * 4、跳转到更新界面，并且把url传递过去
                  */
+                LogUtil.d("开始下载");
                 RxVolley.get(StaticClass.CHECK_UPDATE_URL, new HttpCallback() {
                     @Override
                     public void onSuccess(String t) {
                         LogUtil.d(t);
                         parseJson(t);
+                    }
+
+                    @Override
+                    public void onFailure(VolleyError error) {
+                        LogUtil.d("下载失败"+error.toString());
                     }
                 });
                 break;
@@ -203,6 +210,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
             int code = jsonObject.getInt("versionCode");
             String content = jsonObject.getString("content");
             url = jsonObject.getString("url");
+            LogUtil.d("utl:"+url);
             if (code > versionCode) {
                 showUpdateDialog(content);
             } else {
